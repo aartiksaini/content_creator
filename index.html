@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ashish Saini — Content Writer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+
+        /* ══════════════════════════════════════
+           RESET & VARIABLES
+        ══════════════════════════════════════ */
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            cursor: none !important;
+        }
+
+        :root {
+            --navy:      #0f1a2e;
+            --navy-mid:  #1a2a45;
+            --navy-lite: #243452;
+            --gold:      #c9a84c;
+            --gold-dim:  rgba(201, 168, 76, 0.25);
+            --gold-line: rgba(201, 168, 76, 0.18);
+            --cream:     #f7f3ec;
+            --cream-mid: #ede8df;
+            --white:     #ffffff;
+            --offwhite:  #f2f5f8;
+            --txt-dark:  #0f1a2e;
+            --txt-mid:   #3d4f63;
+            --txt-soft:  #7a8fa6;
+            --border:    #e2e8f0;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--white);
+            color: var(--txt-dark);
+            overflow-x: hidden;
+        }
+
+        /* ══════════════════════════════════════
+           DUAL CURSOR
+        ══════════════════════════════════════ */
+        .c-dot {
+            width: 9px;
+            height: 9px;
+            background: var(--gold);
+            border-radius: 50%;
+            position: fixed;
+            top: 0; left: 0;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            transition: width .18s, height .18s, background .18s, box-shadow .18s;
+            box-shadow: 0 0 10px rgba(201,168,76,.7);
+        }
+        .c-ring {
+            width: 38px;
+            height: 38px;
+            border: 1.5px solid rgba(201,168,76,.55);
+            border-radius: 50%;
+            position: fixed;
+            top: 0; left: 0;
+            pointer-events: none;
+            z-index: 9998;
+            transform: translate(-50%, -50%);
+            transition: width .22s, height .22s, border-color .22s, background .22s;
+        }
+        .c-dot.on  { width: 13px; height: 13px; background: var(--navy); box-shadow: 0 0 0 2px var(--gold), 0 0 20px rgba(201,168,76,.9); }
+        .c-ring.on { width: 52px; height: 52px; border-color: var(--gold); background: rgba(201,168,76,.05); }
+
+        /* ══════════════════════════════════════
+           NAVIGATION
+        ══════════════════════════════════════ */
+        nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 500;
+            height: 68px;
+            background: var(--navy);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 5rem;
+            border-bottom: 1px solid rgba(201,168,76,.12);
+        }
+        .nav-logo {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--gold);
+            text-decoration: none;
+            letter-spacing: .06em;
+        }
+        .nav-links {
+            display: flex;
+            gap: 2.8rem;
+            list-style: none;
+        }
+        .nav-links a {
+            font-size: .78rem;
+            font-weight: 500;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,.55);
+            text-decoration: none;
+            transition: color .2s;
+            position: relative;
+        }
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px; left: 0;
+            width: 0; height: 1px;
+            background: var(--gold);
+            transition: width .25s;
+        }
+        .nav-links a:hover { color: var(--gold); }
+        .nav-links a:hover::after { width: 100%; }
+
+        /* ══════════════════════════════════════
+           SECTION 1 — HERO  (Navy)
+        ══════════════════════════════════════ */
+        #hero {
+            background: var(--navy);
+            min-height: 100vh;
+            padding: 68px 5rem 0;
+            display: flex;
+            align-items: center;
+        }
+        .hero-wrap {
+            max-width: 1120px;
+            margin: 0 auto;
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 5rem;
+            align-items: center;
+        }
+
+        .hero-eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: .6rem;
+            font-size: .72rem;
+            letter-spacing: .18em;
+            text-transform: uppercase;
+            color: var(--gold);
+            font-weight: 500;
+            margin-bottom: 1.5rem;
+        }
+        .hero-eyebrow::before {
+            content: '';
+            display: block;
+            width: 28px; height: 1px;
+            background: var(--gold);
+        }
+        .hero-name {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 5.2rem;
+            font-weight: 700;
+            color: var(--white);
+            line-height: 1.0;
+            margin-bottom: 1.2rem;
+        }
+        .hero-name span { color: var(--gold); display: block; }
+        .hero-sub {
+            font-size: 1rem;
+            color: rgba(255,255,255,.5);
+            font-weight: 300;
+            line-height: 1.8;
+            max-width: 420px;
+            margin-bottom: 2.8rem;
+        }
+        .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+        .btn-gold {
+            background: var(--gold);
+            color: var(--navy);
+            font-size: .82rem;
+            font-weight: 600;
+            letter-spacing: .07em;
+            text-transform: uppercase;
+            padding: .9rem 2.2rem;
+            border-radius: 3px;
+            text-decoration: none;
+            transition: opacity .2s, transform .2s;
+        }
+        .btn-gold:hover { opacity: .88; transform: translateY(-2px); }
+
+        .btn-ghost {
+            background: transparent;
+            color: rgba(255,255,255,.75);
+            font-size: .82rem;
+            font-weight: 500;
+            letter-spacing: .07em;
+            text-transform: uppercase;
+            padding: .9rem 2.2rem;
+            border-radius: 3px;
+            border: 1px solid rgba(255,255,255,.2);
+            text-decoration: none;
+            transition: border-color .2s, color .2s;
+        }
+        .btn-ghost:hover { border-color: var(--gold); color: var(--gold); }
+
+        .hero-right { display: flex; justify-content: center; }
+
+        .hero-card {
+            background: var(--navy-mid);
+            border: 1px solid rgba(201,168,76,.2);
+            border-radius: 6px;
+            padding: 3rem 2.5rem;
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+            max-width: 360px;
+        }
+        .hero-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+        }
+        .hero-card-initials {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 6rem;
+            font-weight: 700;
+            color: var(--gold);
+            opacity: .18;
+            line-height: 1;
+            margin-bottom: 1.5rem;
+        }
+        .hero-card-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.6rem;
+            font-weight: 600;
+            color: var(--white);
+            margin-bottom: .5rem;
+        }
+        .hero-card-role {
+            font-size: .8rem;
+            color: var(--gold);
+            letter-spacing: .12em;
+            text-transform: uppercase;
+            font-weight: 500;
+            margin-bottom: 2rem;
+        }
+        .hero-card-divider {
+            width: 40px; height: 1px;
+            background: var(--gold);
+            margin-bottom: 2rem;
+            opacity: .5;
+        }
+        .hero-card-facts { display: flex; flex-direction: column; gap: 1rem; }
+        .hero-fact {
+            display: flex;
+            align-items: center;
+            gap: .75rem;
+            font-size: .83rem;
+            color: rgba(255,255,255,.55);
+            font-weight: 300;
+        }
+        .hero-fact-dot {
+            width: 5px; height: 5px;
+            border-radius: 50%;
+            background: var(--gold);
+            flex-shrink: 0;
+        }
+
+        /* ══════════════════════════════════════
+           SECTION 2 — ABOUT  (Cream)
+        ══════════════════════════════════════ */
+        #about {
+            background: var(--cream);
+            padding: 8rem 5rem;
+        }
+        .sec-wrap {
+            max-width: 1120px;
+            margin: 0 auto;
+        }
+        .sec-tag {
+            font-size: .72rem;
+            letter-spacing: .2em;
+            text-transform: uppercase;
+            color: var(--gold);
+            font-weight: 500;
+            margin-bottom: .6rem;
+        }
+        .sec-heading {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--navy);
+            margin-bottom: 3.5rem;
+            line-height: 1.15;
+        }
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 5rem;
+            align-items: start;
+        }
+        .about-body p {
+            font-size: .97rem;
+            color: var(--txt-mid);
+            line-height: 1.95;
+            font-weight: 300;
+            margin-bottom: 1.2rem;
+        }
+        .about-body strong { color: var(--navy); font-weight: 600; }
+        .about-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.2rem;
+        }
+        .stat {
+            background: var(--white);
+            border: 1px solid var(--cream-mid);
+            border-top: 3px solid var(--gold);
+            border-radius: 4px;
+            padding: 1.75rem 1.5rem;
+            transition: box-shadow .2s, transform .2s;
+        }
+        .stat:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(15,26,46,.08); }
+        .stat-num {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.6rem;
+            font-weight: 700;
+            color: var(--navy);
+            line-height: 1;
+        }
+        .stat-lbl {
+            font-size: .78rem;
+            color: var(--txt-soft);
+            margin-top: .4rem;
+            letter-spacing: .04em;
+        }
+
+        /* ══════════════════════════════════════
+           SECTION 3 — EXPERIENCE  (White)
+        ══════════════════════════════════════ */
+        #experience {
+            background: var(--white);
+            padding: 8rem 5rem;
+            border-top: 1px solid var(--border);
+        }
+        .exp-list { display: flex; flex-direction: column; }
+        .exp-row {
+            display: grid;
+            grid-template-columns: 240px 1fr;
+            gap: 3rem;
+            padding: 2.8rem 0;
+            border-bottom: 1px solid var(--border);
+        }
+        .exp-row:first-child { border-top: 1px solid var(--border); }
+        .exp-left { padding-top: .2rem; }
+        .exp-co {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--navy);
+            margin-bottom: .35rem;
+            line-height: 1.3;
+        }
+        .exp-date {
+            font-size: .73rem;
+            font-weight: 600;
+            letter-spacing: .08em;
+            color: var(--gold);
+            text-transform: uppercase;
+            margin-bottom: .3rem;
+        }
+        .exp-title {
+            font-size: .82rem;
+            color: var(--txt-soft);
+            font-style: italic;
+        }
+        .exp-desc {
+            font-size: .93rem;
+            color: var(--txt-mid);
+            line-height: 1.9;
+            font-weight: 300;
+            padding-top: .2rem;
+        }
+
+        /* ══════════════════════════════════════
+           SECTION 4 — PROJECTS  (Off-white)
+        ══════════════════════════════════════ */
+        #projects {
+            background: var(--offwhite);
+            padding: 8rem 5rem;
+            border-top: 1px solid var(--border);
+        }
+        .proj-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.4rem;
+        }
+        .proj-card {
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: 5px;
+            padding: 2rem 1.5rem 1.75rem;
+            text-align: center;
+            transition: transform .25s, box-shadow .25s, border-color .25s;
+        }
+        .proj-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 14px 36px rgba(15,26,46,.1);
+            border-color: rgba(201,168,76,.4);
+        }
+        .proj-badge {
+            width: 52px; height: 52px;
+            border-radius: 50%;
+            background: var(--navy);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.1rem;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--gold);
+        }
+        .proj-name {
+            font-size: .88rem;
+            font-weight: 600;
+            color: var(--navy);
+            margin-bottom: .3rem;
+        }
+        .proj-cat {
+            font-size: .72rem;
+            color: var(--txt-soft);
+            letter-spacing: .05em;
+        }
+
+        /* ══════════════════════════════════════
+           SECTION 5 — CONTACT  (Navy)
+        ══════════════════════════════════════ */
+        #contact {
+            background: var(--navy);
+            padding: 8rem 5rem;
+            border-top: 1px solid rgba(201,168,76,.12);
+        }
+        #contact .sec-heading { color: var(--white); margin-bottom: 1rem; }
+        .contact-lead {
+            font-size: .96rem;
+            color: rgba(255,255,255,.5);
+            font-weight: 300;
+            max-width: 480px;
+            line-height: 1.8;
+            margin-bottom: 3.5rem;
+        }
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 5rem;
+            align-items: start;
+        }
+        .contact-items { display: flex; flex-direction: column; gap: 1rem; }
+        .c-link {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1.1rem 1.5rem;
+            border: 1px solid rgba(255,255,255,.1);
+            border-radius: 4px;
+            background: rgba(255,255,255,.04);
+            text-decoration: none;
+            color: rgba(255,255,255,.75);
+            font-size: .9rem;
+            transition: background .22s, border-color .22s, color .22s;
+        }
+        .c-link:hover {
+            background: var(--gold-dim);
+            border-color: rgba(201,168,76,.45);
+            color: var(--gold);
+        }
+        .c-icon { font-size: 1rem; width: 22px; text-align: center; flex-shrink: 0; }
+        .expertise-box {
+            background: rgba(255,255,255,.04);
+            border: 1px solid rgba(255,255,255,.1);
+            border-radius: 5px;
+            padding: 2.5rem;
+        }
+        .expertise-box h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--gold);
+            margin-bottom: .6rem;
+        }
+        .expertise-box p {
+            font-size: .85rem;
+            color: rgba(255,255,255,.45);
+            line-height: 1.75;
+            font-weight: 300;
+            margin-bottom: 1.8rem;
+        }
+        .tags { display: flex; flex-wrap: wrap; gap: .6rem; }
+        .tag {
+            font-size: .72rem;
+            font-weight: 500;
+            letter-spacing: .05em;
+            color: var(--gold);
+            border: 1px solid rgba(201,168,76,.3);
+            background: rgba(201,168,76,.08);
+            padding: .35rem .9rem;
+            border-radius: 20px;
+        }
+
+        /* ══════════════════════════════════════
+           FOOTER
+        ══════════════════════════════════════ */
+        footer {
+            background: #080f1c;
+            text-align: center;
+            padding: 1.8rem;
+            font-size: .75rem;
+            color: rgba(255,255,255,.25);
+            letter-spacing: .07em;
+            border-top: 1px solid rgba(201,168,76,.1);
+        }
+
+        /* ══════════════════════════════════════
+           RESPONSIVE
+        ══════════════════════════════════════ */
+        @media (max-width: 1024px) {
+            nav { padding: 0 2rem; }
+            #hero, #about, #experience, #projects, #contact { padding-left: 2rem; padding-right: 2rem; }
+            .hero-wrap, .about-grid, .contact-grid { grid-template-columns: 1fr; gap: 3rem; }
+            .hero-name { font-size: 3.8rem; }
+            .proj-grid { grid-template-columns: repeat(2, 1fr); }
+            .exp-row { grid-template-columns: 1fr; gap: .75rem; }
+        }
+        @media (max-width: 640px) {
+            .nav-links { display: none; }
+            .hero-name { font-size: 3rem; }
+            .sec-heading { font-size: 2.2rem; }
+            .proj-grid { grid-template-columns: repeat(2, 1fr); }
+            .about-stats { grid-template-columns: 1fr 1fr; }
+        }
+
+    </style>
+</head>
+<body>
+
+<!-- DUAL CURSOR -->
+<div class="c-dot"  id="cDot"></div>
+<div class="c-ring" id="cRing"></div>
+
+<!-- ══ NAVIGATION ═══════════════════════════ -->
+<nav>
+    <a href="#hero" class="nav-logo">Pendown by Shagun</a>
+    <ul class="nav-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#experience">Experience</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#contact">Contact</a></li>
+    </ul>
+</nav>
+
+<!-- ══ HERO — Navy ══════════════════════════ -->
+<section id="hero">
+    <div class="hero-wrap">
+
+        <div class="hero-left">
+            <div class="hero-eyebrow">Content Writer &amp; Copywriter</div>
+            <h1 class="hero-name">
+                Ashish
+                <span>Saini</span>
+            </h1>
+            <p class="hero-sub">
+                Versatile freelance writer crafting compelling blogs, website copy, and brand narratives that connect, convert, and create lasting impact.
+            </p>
+            <div class="hero-btns">
+                <a href="mailto:pendownbyshagun2025@gmail.com" class="btn-gold">Get in Touch</a>
+                <a href="https://www.linkedin.com/in/shagun-tyagi-2159441b9/" target="_blank" class="btn-ghost">LinkedIn Profile</a>
+            </div>
+        </div>
+
+        <div class="hero-right">
+            <div class="hero-card">
+                <div class="hero-card-initials">AS</div>
+                <div class="hero-card-title">Ashish Saini</div>
+                <div class="hero-card-role">Freelance Content Writer</div>
+                <div class="hero-card-divider"></div>
+                <div class="hero-card-facts">
+                    <div class="hero-fact"><span class="hero-fact-dot"></span>3+ Years of Experience</div>
+                    <div class="hero-fact"><span class="hero-fact-dot"></span>8+ Brands &amp; Projects</div>
+                    <div class="hero-fact"><span class="hero-fact-dot"></span>SEO-Optimized Content</div>
+                    <div class="hero-fact"><span class="hero-fact-dot"></span>Multi-Industry Expertise</div>
+                    <div class="hero-fact"><span class="hero-fact-dot"></span>pendownbyshagun2025@gmail.com</div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- ══ ABOUT — Cream ════════════════════════ -->
+<section id="about">
+    <div class="sec-wrap">
+        <p class="sec-tag">Who I Am</p>
+        <h2 class="sec-heading">About Me</h2>
+        <div class="about-grid">
+
+            <div class="about-body">
+                <p>Hi, I'm <strong>Ashish Saini</strong> — the mind behind PendownbyShagun. I help brands tell their stories through content that's well-written, strategically crafted, and built to connect with real audiences.</p>
+                <p>From decoding technical topics like barcodes to simplifying airline policies — and now writing across industries including fashion, health, tech, and finance — I adapt to every niche with precision and purpose.</p>
+                <p>My goal is to understand your brand's voice and bring it to life. Whether you need website copy, SEO blogs, or long-form content, I deliver work that speaks to your audience and drives measurable results.</p>
+            </div>
+
+            <div class="about-stats">
+                <div class="stat">
+                    <div class="stat-num">3+</div>
+                    <div class="stat-lbl">Years of Experience</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-num">8+</div>
+                    <div class="stat-lbl">Brands &amp; Projects</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-num">5+</div>
+                    <div class="stat-lbl">Industries Covered</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-num">SEO</div>
+                    <div class="stat-lbl">Optimized Writing</div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- ══ EXPERIENCE — White ═══════════════════ -->
+<section id="experience">
+    <div class="sec-wrap">
+        <p class="sec-tag">Career</p>
+        <h2 class="sec-heading">Work Experience</h2>
+        <div class="exp-list">
+
+            <div class="exp-row">
+                <div class="exp-left">
+                    <div class="exp-co">Codewraps Pvt. Ltd.</div>
+                    <div class="exp-date">Nov 2024 — Present</div>
+                    <div class="exp-title">Content Writer</div>
+                </div>
+                <p class="exp-desc">Crafting SEO-optimized, client-focused content for businesses across tech, real estate, healthcare, and lifestyle verticals. Collaborating closely with developers and digital strategists to produce web pages, blogs, service descriptions, and product copy that reflects each brand's voice and meets search engine standards.</p>
+            </div>
+
+            <div class="exp-row">
+                <div class="exp-left">
+                    <div class="exp-co">Advology Solution</div>
+                    <div class="exp-date">Feb 2024 — Nov 2024</div>
+                    <div class="exp-title">Content Writer</div>
+                </div>
+                <p class="exp-desc">Focused on the travel and aviation domain at a global digital marketing agency. Created precise, SEO-optimized content covering airline terms, baggage rules, cancellations, refunds, and rescheduling policies — demanding accuracy, clarity, and the ability to communicate critical information in a simplified professional tone.</p>
+            </div>
+
+            <div class="exp-row">
+                <div class="exp-left">
+                    <div class="exp-co">DRPU Software Pvt. Ltd.</div>
+                    <div class="exp-date">Aug 2022 — Feb 2023</div>
+                    <div class="exp-title">Content Writer Intern</div>
+                </div>
+                <p class="exp-desc">Produced informative, SEO-optimized content on barcode technology for healthcare, warehousing, shipping, pharmaceuticals, and retail sectors. Responsible for product descriptions, use-case articles, website copy, and technical guides that clearly communicated the features and benefits of barcode software solutions.</p>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- ══ PROJECTS — Off-white ═════════════════ -->
+<section id="projects">
+    <div class="sec-wrap">
+        <p class="sec-tag">Portfolio</p>
+        <h2 class="sec-heading">Projects</h2>
+        <div class="proj-grid">
+            <div class="proj-card">
+                <div class="proj-badge">E&amp;P</div>
+                <div class="proj-name">E&amp;sence Psychotherapy</div>
+                <div class="proj-cat">Health &amp; Wellness</div>
+            </div>
+            <div class="proj-card">
+                <div class="proj-badge">VT</div>
+                <div class="proj-name">VerTechs</div>
+                <div class="proj-cat">Technology</div>
+            </div>
+            <div class="proj-card">
+                <div class="proj-badge">BMB</div>
+                <div class="proj-name">BraveMeBeautiful</div>
+                <div class="proj-cat">Fashion &amp; Lifestyle</div>
+            </div>
+            <div class="proj-card">
+                <div class="proj-badge">H2T</div>
+                <div class="proj-name">H2Terminals</div>
+                <div class="proj-cat">Infrastructure</div>
+            </div>
+            <div class="proj-card">
+                <div class="proj-badge">TAP</div>
+                <div class="proj-name">The AirPeople</div>
+                <div class="proj-cat">Travel &amp; Aviation</div>
+            </div>
+            <div class="proj-card">
+                <div class="proj-badge">PPG</div>
+                <div class="proj-name">Priya Puja Ghar</div>
+                <div class="proj-cat">Spiritual &amp; Culture</div>
+            </div>
+            <div class="proj-card">
+                <div class="proj-badge">LP</div>
+                <div class="proj-name">Linpack</div>
+                <div class="proj-cat">Tech &amp; Software</div>
+            </div>
+            <div class="proj-card">
+                <div class="proj-badge">CW</div>
+                <div class="proj-name">Codewraps</div>
+                <div class="proj-cat">Digital Solutions</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ══ CONTACT — Navy ═══════════════════════ -->
+<section id="contact">
+    <div class="sec-wrap">
+        <p class="sec-tag">Let's Work Together</p>
+        <h2 class="sec-heading">Contact Me</h2>
+        <p class="contact-lead">Open to new projects, freelance opportunities, and long-term collaborations. Reach out through any of the channels below.</p>
+        <div class="contact-grid">
+
+            <div class="contact-items">
+                <a href="mailto:pendownbyshagun2025@gmail.com" class="c-link">
+                    <span class="c-icon">✉</span>
+                    pendownbyshagun2025@gmail.com
+                </a>
+                <a href="tel:+918273488101" class="c-link">
+                    <span class="c-icon">📞</span>
+                    +91 82734 88101
+                </a>
+                <a href="https://www.linkedin.com/in/shagun-tyagi-2159441b9/" target="_blank" class="c-link">
+                    <span class="c-icon">🔗</span>
+                    LinkedIn Profile
+                </a>
+            </div>
+
+            <div class="expertise-box">
+                <h3>Areas of Expertise</h3>
+                <p>Available for blogs, website copy, SEO content, product descriptions, brand narratives, and long-form articles.</p>
+                <div class="tags">
+                    <span class="tag">SEO Writing</span>
+                    <span class="tag">Web Copy</span>
+                    <span class="tag">Blog Writing</span>
+                    <span class="tag">Tech</span>
+                    <span class="tag">Healthcare</span>
+                    <span class="tag">Aviation</span>
+                    <span class="tag">Fashion</span>
+                    <span class="tag">Finance</span>
+                    <span class="tag">Real Estate</span>
+                    <span class="tag">Lifestyle</span>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- ══ FOOTER ════════════════════════════════ -->
+<footer>
+    &copy; 2025 Ashish Saini — Pendown by Shagun. All rights reserved.
+</footer>
+
+<!-- ══ SCRIPTS ════════════════════════════════ -->
+<script>
+(function () {
+
+    /* Dual cursor */
+    const dot  = document.getElementById('cDot');
+    const ring = document.getElementById('cRing');
+    let mx = 0, my = 0, rx = 0, ry = 0;
+
+    document.addEventListener('mousemove', e => {
+        mx = e.clientX;
+        my = e.clientY;
+        dot.style.left = mx + 'px';
+        dot.style.top  = my + 'px';
+    });
+
+    (function loop () {
+        rx += (mx - rx) * 0.11;
+        ry += (my - ry) * 0.11;
+        ring.style.left = rx + 'px';
+        ring.style.top  = ry + 'px';
+        requestAnimationFrame(loop);
+    })();
+
+    document.querySelectorAll('a, button, .proj-card, .exp-row, .stat, .nav-logo').forEach(el => {
+        el.addEventListener('mouseenter', () => { dot.classList.add('on');    ring.classList.add('on');    });
+        el.addEventListener('mouseleave', () => { dot.classList.remove('on'); ring.classList.remove('on'); });
+    });
+
+    /* Active nav highlight */
+    const secs  = document.querySelectorAll('section[id]');
+    const links = document.querySelectorAll('.nav-links a');
+    window.addEventListener('scroll', () => {
+        let cur = '';
+        secs.forEach(s => { if (window.scrollY >= s.offsetTop - 120) cur = s.id; });
+        links.forEach(a => {
+            a.style.color = a.getAttribute('href') === '#' + cur
+                ? 'var(--gold)'
+                : 'rgba(255,255,255,.55)';
+        });
+    }, { passive: true });
+
+    /* Scroll fade-in */
+    const io = new IntersectionObserver(entries => {
+        entries.forEach(e => {
+            if (e.isIntersecting) {
+                e.target.style.opacity   = '1';
+                e.target.style.transform = 'translateY(0)';
+                io.unobserve(e.target);
+            }
+        });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+    document.querySelectorAll('.exp-row, .proj-card, .stat, .about-body p').forEach(el => {
+        el.style.opacity    = '0';
+        el.style.transform  = 'translateY(26px)';
+        el.style.transition = 'opacity .6s ease, transform .6s ease';
+        io.observe(el);
+    });
+
+})();
+</script>
+
+</body>
+</html>
